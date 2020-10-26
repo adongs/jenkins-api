@@ -1,0 +1,138 @@
+package com.adongs.rule;
+
+/**
+ * @author yudong
+ * @version 1.0
+ * @date 2020/10/21 4:34 下午
+ * @modified By
+ */
+public class JobRule {
+
+    public static final JobRule DEFAULT_RULE = new JobRule(
+            "//div[@id='page-body']/div[@id='main-panel']/div[@class='dashboard']/div[@class='pane-frame']/table[@id='projectstatus']/tbody/tr[@class!='header']",
+            "//td[1]/@data",
+            "//td[2]/@data",
+            "//td[3]/a/allText()",
+            "//td[4]/@data",
+            "//td[5]/@data",
+            "//td[6]/@data",
+            "//td[7]/a/@href"
+            );
+
+    public JobRule() {
+    }
+
+    public JobRule(String list, String status, String buildHealth, String name, String buildSuccessDatatime, String buildFailureDatatime, String duration, String allowBuild) {
+        this.list = list;
+        this.status = status;
+        this.buildHealth = buildHealth;
+        this.name = name;
+        this.buildSuccessDatatime = buildSuccessDatatime;
+        this.buildFailureDatatime = buildFailureDatatime;
+        this.duration = duration;
+        this.allowBuild = allowBuild;
+    }
+
+    /**
+     * 集合
+     */
+    private String list;
+    /**
+     * 上次构建状态
+     */
+    private String status;
+
+    /**
+     * 构建状态
+     */
+    private String buildHealth;
+
+    /**
+     * 任务名称
+     */
+    private String name;
+
+    /**
+     * 上次构建成功时间
+     */
+    private String buildSuccessDatatime;
+
+    /**
+     * 上次构建失败时间
+     */
+    private String buildFailureDatatime;
+
+    /**
+     * 持续时间(单位毫秒)
+     */
+    private String duration;
+
+    /**
+     * 允许构建
+     */
+    private String allowBuild;
+
+    public String getList() {
+        return list;
+    }
+
+    public void setList(String list) {
+        this.list = list;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBuildHealth() {
+        return buildHealth;
+    }
+
+    public void setBuildHealth(String buildHealth) {
+        this.buildHealth = buildHealth;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBuildSuccessDatatime() {
+        return buildSuccessDatatime;
+    }
+
+    public void setBuildSuccessDatatime(String buildSuccessDatatime) {
+        this.buildSuccessDatatime = buildSuccessDatatime;
+    }
+
+    public String getBuildFailureDatatime() {
+        return buildFailureDatatime;
+    }
+
+    public void setBuildFailureDatatime(String buildFailureDatatime) {
+        this.buildFailureDatatime = buildFailureDatatime;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getAllowBuild() {
+        return allowBuild;
+    }
+
+    public void setAllowBuild(String allowBuild) {
+        this.allowBuild = allowBuild;
+    }
+}
