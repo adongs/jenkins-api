@@ -21,32 +21,53 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/10/20 11:24 上午
  * @modified By
  */
-public class FeignTest {
+public class MainTest {
 
 
 //测试样例
     public static void main(String[] args) throws Exception{
          JenkinsClient jenkinsClient = new JenkinsClient(new TokenSave() {
+             /**
+              * 获取缓存的令牌
+              * @return 令牌
+              */
         @Override
         public String token() {
             return null;
         }
 
+             /**
+              * 保存令牌,当访问到令牌的时候会调用保存
+              * @param token  令牌
+              * @param time   有效时间
+              * @param timeUnit 单位
+              */
         @Override
         public void save(String token, long time, TimeUnit timeUnit) {
 
         }
 
+             /**
+              * 有效时间
+              * @return
+              */
         @Override
         public long time() {
             return 0;
         }
 
+             /**
+              * 是否过期
+              * @return
+              */
         @Override
         public boolean expired() {
             return false;
         }
 
+             /**
+              * 删除令牌
+              */
         @Override
         public void delete() {
 
