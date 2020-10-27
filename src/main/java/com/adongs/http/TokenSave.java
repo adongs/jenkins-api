@@ -38,4 +38,33 @@ public interface TokenSave {
      */
     public void delete();
 
+
+
+   public static class DefaultTokenSave implements TokenSave{
+       @Override
+       public String token() {
+           return null;
+       }
+
+       @Override
+       public void save(String token, long time, TimeUnit timeUnit) {
+
+       }
+
+       @Override
+       public long time() {
+           return 0;
+       }
+
+       @Override
+       public boolean expired() {
+           return false;
+       }
+
+       @Override
+       public void delete() {
+
+       }
+   }
+
 }

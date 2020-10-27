@@ -4,8 +4,10 @@ import com.adongs.api.BuildQueue;
 import com.adongs.api.JobAction;
 import com.adongs.api.ViewInfo;
 import com.adongs.api.impl.ViewInfoImpl;
+import com.adongs.http.HttpReques;
 import com.adongs.http.TokenSave;
 import com.adongs.model.QueueJob;
+import com.adongs.model.TestLoginResult;
 import com.adongs.model.View;
 import org.jsoup.Jsoup;
 import org.seimicrawler.xpath.JXDocument;
@@ -26,54 +28,59 @@ public class MainTest {
 
 //测试样例
     public static void main(String[] args) throws Exception{
-         JenkinsClient jenkinsClient = new JenkinsClient(new TokenSave() {
-             /**
-              * 获取缓存的令牌
-              * @return 令牌
-              */
-        @Override
-        public String token() {
-            return null;
-        }
+        testDemo();
+    }
 
-             /**
-              * 保存令牌,当访问到令牌的时候会调用保存
-              * @param token  令牌
-              * @param time   有效时间
-              * @param timeUnit 单位
-              */
-        @Override
-        public void save(String token, long time, TimeUnit timeUnit) {
 
-        }
+    public static void testDemo(){
+        JenkinsClient jenkinsClient = new JenkinsClient(new TokenSave() {
+            /**
+             * 获取缓存的令牌
+             * @return 令牌
+             */
+            @Override
+            public String token() {
+                return null;
+            }
 
-             /**
-              * 有效时间
-              * @return
-              */
-        @Override
-        public long time() {
-            return 0;
-        }
+            /**
+             * 保存令牌,当访问到令牌的时候会调用保存
+             * @param token  令牌
+             * @param time   有效时间
+             * @param timeUnit 单位
+             */
+            @Override
+            public void save(String token, long time, TimeUnit timeUnit) {
 
-             /**
-              * 是否过期
-              * @return
-              */
-        @Override
-        public boolean expired() {
-            return false;
-        }
+            }
 
-             /**
-              * 删除令牌
-              */
-        @Override
-        public void delete() {
+            /**
+             * 有效时间
+             * @return
+             */
+            @Override
+            public long time() {
+                return 0;
+            }
 
-        }
-    }, "jenkins服务器url", "name", "密码".toCharArray());
-       //获取视图
+            /**
+             * 是否过期
+             * @return
+             */
+            @Override
+            public boolean expired() {
+                return false;
+            }
+
+            /**
+             * 删除令牌
+             */
+            @Override
+            public void delete() {
+
+            }
+        }, "jenkins服务器url", "name", "密码".toCharArray());
+        //获取视图
         final ViewInfo view = jenkinsClient.getView();
         //全局视图
         final List<View> global = view.global();

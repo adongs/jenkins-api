@@ -2,18 +2,16 @@ package com.adongs;
 
 import com.adongs.api.BuildQueue;
 import com.adongs.api.JobAction;
+import com.adongs.api.UserAction;
 import com.adongs.api.ViewInfo;
 import com.adongs.api.impl.BuildQueueImpl;
 import com.adongs.api.impl.JobActionImpl;
+import com.adongs.api.impl.UserActionImpl;
 import com.adongs.api.impl.ViewInfoImpl;
 import com.adongs.http.HttpReques;
 import com.adongs.http.TokenSave;
-import com.adongs.rule.JobRule;
-import com.adongs.rule.MyViewRule;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
-import org.seimicrawler.xpath.util.Scanner;
 
 /**
  * jenkins 客户端
@@ -55,6 +53,11 @@ public class JenkinsClient {
     }
     return buildQueue;
   }
+
+  public UserAction getUserAction(){
+    return new UserActionImpl(httpReques);
+  }
+
 
 
   public static class Server{

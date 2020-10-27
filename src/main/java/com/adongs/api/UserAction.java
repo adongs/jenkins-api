@@ -8,14 +8,7 @@ import com.adongs.model.TestLoginResult;
  * @date 2020/10/26 4:33 下午
  * @modified By
  */
-public interface LoginAction {
-
-    /**
-     * 测试登录
-     * @param name
-     * @param password
-     */
-    public TestLoginResult testLogin(String name, char[] password);
+public interface UserAction {
 
     /**
      * 登出

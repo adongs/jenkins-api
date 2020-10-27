@@ -19,10 +19,14 @@ import java.util.Set;
 public class HttpReques {
 
     private OkHttpClient client ;
-    private final OkHttpClient testClient;
+    private final static OkHttpClient testClient;
     private final JenkinsClient.Server server;
     private final static String LOGIN_URL = "/j_acegi_security_check";
     private final CookieMemory cookieMemory ;
+
+    static {
+        testClient = new OkHttpClient.Builder().cookieJar(new CookieMemory(new TokenSave.DefaultTokenSave())).build();
+    }
 
     public HttpReques(TokenSave tokenSave, JenkinsClient.Server server) {
         this.cookieMemory = new CookieMemory(tokenSave);
@@ -31,7 +35,6 @@ public class HttpReques {
         .addInterceptor(new SimulateBrowserInterceptor())
         .addInterceptor(tokenInterceptor)
         .build();
-        testClient = new OkHttpClient.Builder().build();
         this.server = server;
     }
 
@@ -41,20 +44,22 @@ public class HttpReques {
      * @param password
      * @return
      */
-    public TestLoginResult testLogin(String name, char [] password){
+    public static TestLoginResult testLogin(String url,String name, char [] password){
+        final Request indexPage = new Request.Builder().url(url).get().build();
         RequestBody body = new FormBody.Builder()
-                .add("j_username",server.getName())
-                .add("j_password",new String(server.getPassword()))
+                .add("j_username",name)
+                .add("j_password",new String(password))
                 .add("from","/")
                 .add("Submit","登录")
                 .add("remember_me","on").build();
-        final Request login = new Request.Builder().url(server.getUrl() + LOGIN_URL).post(body).build();
-        try (final  Response response = testClient.newCall(login).execute()){
+        final Request login = new Request.Builder().url(url+ LOGIN_URL).post(body).build();
+        try (final Response execute = testClient.newCall(indexPage).execute();
+             final  Response response = testClient.newCall(login).execute()){
             final int code = response.code();
             if (code>=200 && code<400){
                 return new TestLoginResult(true,"登录成功");
             }
-            return new TestLoginResult(true,"登录失败");
+            return new TestLoginResult(false,"登录失败");
         }catch (IOException e){
             return new TestLoginResult(false,e.getMessage());
         }catch (Exception e){
