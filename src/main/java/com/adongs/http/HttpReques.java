@@ -4,6 +4,7 @@ import com.adongs.JenkinsClient;
 import com.adongs.model.ResponseData;
 import com.adongs.model.TestLoginResult;
 import okhttp3.*;
+import okhttp3.internal.Util;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -32,7 +33,8 @@ public class HttpReques {
         this.cookieMemory = new CookieMemory(tokenSave);
         final TokenInterceptor tokenInterceptor = new TokenInterceptor(server,cookieMemory, LOGIN_URL);
         client =  new OkHttpClient.Builder().cookieJar(cookieMemory)
-        .addInterceptor(new SimulateBrowserInterceptor())
+        //.addInterceptor(new SimulateBrowserInterceptor())
+        .addInterceptor(new  CrumbInterceptor(server))
         .addInterceptor(tokenInterceptor)
         .build();
         this.server = server;
@@ -141,5 +143,17 @@ public class HttpReques {
                 .post(builder.build())
                 .url(server.getUrl()+url).build();
        return client.newCall(request).execute();
+    }
+
+
+    public Response postResponseParam(String url, Map<String,String> param)throws IOException{
+        HttpUrl.Builder urlBuilder =HttpUrl.parse(server.getUrl()+url).newBuilder();
+        if (param!=null && !param.isEmpty()) {
+            param.forEach(urlBuilder::addQueryParameter);
+        }
+        Request request = new Request.Builder()
+                .post(Util.EMPTY_REQUEST)
+                .url(urlBuilder.build()).build();
+        return client.newCall(request).execute();
     }
 }

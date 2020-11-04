@@ -32,6 +32,11 @@ public class QueueJob {
      */
     private String cancelUrl;
 
+    /**
+     * 是否为未知任务
+     */
+    private boolean unknownTask;
+
 
     public QueueJob(String name,String startUser, String number, int schedule, String cancelUrl) {
         this.name = name;
@@ -39,6 +44,11 @@ public class QueueJob {
         this.number = number;
         this.schedule = schedule;
         this.cancelUrl = cancelUrl;
+    }
+
+    public QueueJob(String name, boolean unknownTask) {
+        this.name = name;
+        this.unknownTask = unknownTask;
     }
 
     public QueueJob(String name, String startUser, String cancelUrl) {
@@ -65,5 +75,9 @@ public class QueueJob {
 
     public String getCancelUrl() {
         return cancelUrl;
+    }
+
+    public boolean isUnknownTask() {
+        return unknownTask;
     }
 }

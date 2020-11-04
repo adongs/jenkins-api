@@ -23,7 +23,8 @@ public class TokenInterceptor implements Interceptor {
         this.server = server;
         this.url = url;
         client = new OkHttpClient.Builder().cookieJar(cookieMemory)
-                .addInterceptor(new SimulateBrowserInterceptor()).build();
+                //.addInterceptor(new SimulateBrowserInterceptor())
+                .build();
     }
 
 

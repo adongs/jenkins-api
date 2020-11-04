@@ -1,5 +1,6 @@
 package com.adongs.api;
 
+import com.adongs.model.CrumbIssuer;
 import com.adongs.model.QueueJob;
 
 /**
@@ -36,4 +37,9 @@ public interface JobAction {
      */
     public void cancelBuildOutput(BuildOutput buildOutput);
 
+    /**
+     * 获取令牌
+     * @return
+     */
+    public CrumbIssuer crumbIssuer();
 }

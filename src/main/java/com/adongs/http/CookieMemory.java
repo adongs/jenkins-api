@@ -27,7 +27,7 @@ public class CookieMemory  implements CookieJar {
         this.tokenSave = tokenSave;
         final String token = tokenSave.token();
         if(!StringUtils.isEmpty(token)){
-            final Cookie build = new Cookie.Builder().name(TOKEN_NAME).value(token).expiresAt(tokenSave.time()).build();
+            final Cookie build = stringToCookie(token);
             if (tokenSave!=null) {
                 cookieStore.add(build);
             }
@@ -39,7 +39,7 @@ public class CookieMemory  implements CookieJar {
         for (Cookie cookie : list) {
             if (TOKEN_NAME.equals(cookie.name())){
                 if (tokenSave!=null) {
-                    tokenSave.save(cookie.value(), cookie.expiresAt(), TimeUnit.SECONDS);
+                    tokenSave.save(cookieToString(cookie), cookie.expiresAt(), TimeUnit.SECONDS);
                 }
             }
         }
@@ -56,4 +56,20 @@ public class CookieMemory  implements CookieJar {
         tokenSave.delete();
         cookieStore.clear();
     }
+
+
+    public String cookieToString(Cookie cookie){
+      StringBuffer content =  new StringBuffer();
+      content.append(cookie.value()).append(",")
+             .append(cookie.domain());
+        return content.toString();
+    }
+
+    public Cookie stringToCookie(String content){
+        final String[] split = content.split(",");
+        final Cookie.Builder builder = new Cookie.Builder();
+        builder.name(TOKEN_NAME).value(split[0]).domain(split[1]);
+        return builder.build();
+    }
+
 }

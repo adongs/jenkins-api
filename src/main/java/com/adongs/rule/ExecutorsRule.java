@@ -11,6 +11,7 @@ public class ExecutorsRule {
     public final static ExecutorsRule DEFAULT_RULE = new ExecutorsRule(
             "//div[@id='executors']/div[@class='row pane-content']/table[@class='pane ']/tbody/tr",
             "//td[2]/div/a/allText()",
+            "//td[2]/div/span/allText()",
             "//td[3]/a/allText()",
             "//td[2]/div/table/tbody/tr/td[1]/@style",
             "//td[4]/a/@href");
@@ -21,6 +22,10 @@ public class ExecutorsRule {
      */
     private String name;
 
+    /**
+     * 任务通道
+     */
+    private String taskChannel;
     /**
      * 编号
      */
@@ -39,9 +44,10 @@ public class ExecutorsRule {
     public ExecutorsRule() {
     }
 
-    public ExecutorsRule(String list, String name, String number, String schedule, String allowCancel) {
+    public ExecutorsRule(String list, String name,String taskChannel, String number, String schedule, String allowCancel) {
         this.list = list;
         this.name = name;
+        this.taskChannel = taskChannel;
         this.number = number;
         this.schedule = schedule;
         this.allowCancel = allowCancel;
@@ -61,6 +67,14 @@ public class ExecutorsRule {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTaskChannel() {
+        return taskChannel;
+    }
+
+    public void setTaskChannel(String taskChannel) {
+        this.taskChannel = taskChannel;
     }
 
     public String getNumber() {

@@ -79,20 +79,23 @@ public class MainTest {
             public void delete() {
 
             }
-        }, "jenkins服务器url", "name", "密码".toCharArray());
-        //获取视图
-        final ViewInfo view = jenkinsClient.getView();
-        //全局视图
-        final List<View> global = view.global();
-        //我的视图
-        final List<View> views = view.myView();
-        //获取队列
-        final BuildQueue buildQueue = jenkinsClient.getBuildQueue();
-        //获取构建等待队列
-        final List<QueueJob> queueJobs = buildQueue.buildQueue();
-        //获取执行中的队列
-        final List<QueueJob> executors = buildQueue.executors();
+        }, "http://120.27.12.18:10004", "admin", "erdos2020".toCharArray());
         final JobAction jobAction = jenkinsClient.getJobAction();
+        final boolean build = jobAction.build("hyt-statistics-front(运营支撑前端)");
+        System.out.println(build);
+        //获取视图
+     /*   final ViewInfo view = jenkinsClient.getView();*/
+        //全局视图
+   /*     final List<View> global = view.global();
+        //我的视图
+        final List<View> views = view.myView();*/
+        //获取队列
+    //    final BuildQueue buildQueue = jenkinsClient.getBuildQueue();
+        //获取构建等待队列
+    //    final List<QueueJob> queueJobs = buildQueue.buildQueue();
+        //获取执行中的队列
+   /*    final List<QueueJob> executors = buildQueue.executors();*/
+       /* final JobAction jobAction = jenkinsClient.getJobAction();
         //构建
         final boolean build = jobAction.build("job名称");
         //取消构建,需要获取执行中的队列进行取消
@@ -131,6 +134,6 @@ public class MainTest {
         };
         jobAction.buildOutput(buildOutput);
         //取消输出构建信息
-        jobAction.cancelBuildOutput(buildOutput);
+        jobAction.cancelBuildOutput(buildOutput);*/
     }
 }

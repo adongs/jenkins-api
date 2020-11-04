@@ -3,9 +3,11 @@ package com.adongs.api.impl;
 import com.adongs.api.BuildOutput;
 import com.adongs.api.JobAction;
 import com.adongs.http.HttpReques;
+import com.adongs.model.CrumbIssuer;
 import com.adongs.model.QueueJob;
 import com.adongs.model.ResponseData;
 import com.adongs.model.TimedTask;
+import com.alibaba.fastjson.JSON;
 import okhttp3.Response;
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +40,11 @@ public class JobActionImpl implements JobAction {
     public boolean build(String jobName) {
         Map<String,String> param = new HashMap<>();
         param.put("delay","0sec");
-        try(final Response response = httpReques.postResponse("/job/" + jobName + "/build", param)){
+        final CrumbIssuer crumbIssuer = crumbIssuer();
+        if (crumbIssuer!=null){
+
+        }
+        try(final Response response = httpReques.postResponseParam("/job/" + jobName + "/build", param)){
            return response.isSuccessful();
         }catch (IOException e){
             return false;
@@ -64,5 +70,15 @@ public class JobActionImpl implements JobAction {
     @Override
     public void cancelBuildOutput(BuildOutput buildOutput) {
         buildOutput.setDiscontinue();
+    }
+
+
+    @Override
+    public CrumbIssuer crumbIssuer() {
+        final ResponseData responseData = httpReques.get("/crumbIssuer/api/json", null);
+        if (responseData.isRead()){
+          return JSON.parseObject(responseData.getData(),CrumbIssuer.class);
+        }
+        return null;
     }
 }
