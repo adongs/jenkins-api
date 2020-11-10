@@ -87,11 +87,21 @@ public class ViewInfoImpl implements ViewInfo {
                 ALL_JOB.clear();
                 for (JXNode jxNode : taskNode) {
                     JXDocument jobJXDocument = new JXDocument(jxNode.asElement().children());
-                    final String status = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatus())).orElse("").toString();
-                    final Integer buildHealth = Integer.valueOf(Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealth())).orElse("-1").toString());
+                    final String statusStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatus())).orElse("").toString();
+                    final String url = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusUrl())).orElse("").toString();
+                    final String title = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusTitle())).orElse("").toString();
+                    Job.Status status = new Job.Status(url,title,statusStr);
+                    final String buildHealthStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealth())).orElse("0").toString();
+                    final String buildHealthUrl = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthUrl())).orElse("").toString();
+                    final String buildHealthTitle = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthTitle())).orElse("").toString();
+                    Job.Status buildHealth = new Job.Status(buildHealthUrl,buildHealthTitle,buildHealthStr);
                     final String name = Optional.ofNullable(jobJXDocument.selOne(jobRule.getName())).orElse("").toString();
-                    final String buildSuccessDatatime = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildSuccessDatatime())).orElse("-").toString();
-                    final String buildFailureDatatime = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildFailureDatatime())).orElse("-").toString();
+                    final String buildSuccessDatatimeStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildSuccessDatatime())).orElse("-").toString();
+                    final String buildSuccessDatatimeDifference = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildSuccessDatatimeDifference())).orElse("-").toString();
+                    Job.DateTime buildSuccessDatatime = new Job.DateTime(buildSuccessDatatimeStr,buildSuccessDatatimeDifference);
+                    final String buildFailureDatatimeStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildFailureDatatime())).orElse("-").toString();
+                    final String buildFailureDatatimeDifference = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildFailureDatatime())).orElse("-").toString();
+                    Job.DateTime buildFailureDatatime = new Job.DateTime(buildFailureDatatimeStr,buildFailureDatatimeDifference);
                     final Long duration = Long.valueOf(Optional.ofNullable(jobJXDocument.selOne(jobRule.getDuration())).orElse("-1").toString());
                     final boolean allowBuild = jobJXDocument.selOne(jobRule.getAllowBuild())!=null;
                     Job job = new Job(status,buildHealth,name,buildSuccessDatatime,buildFailureDatatime,duration,allowBuild);

@@ -1,13 +1,7 @@
 package com.adongs;
 
-import com.adongs.api.BuildQueue;
-import com.adongs.api.JobAction;
-import com.adongs.api.UserAction;
-import com.adongs.api.ViewInfo;
-import com.adongs.api.impl.BuildQueueImpl;
-import com.adongs.api.impl.JobActionImpl;
-import com.adongs.api.impl.UserActionImpl;
-import com.adongs.api.impl.ViewInfoImpl;
+import com.adongs.api.*;
+import com.adongs.api.impl.*;
 import com.adongs.http.HttpReques;
 import com.adongs.http.TokenSave;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +21,8 @@ public class JenkinsClient {
   private ViewInfo viewInfo;
   private JobAction jobAction;
   private BuildQueue buildQueue;
+  private UserAction userAction;
+  private HistoryInformation historyInformation;
 
   public JenkinsClient(TokenSave tokenSave, @NotNull String url, @NotNull String name, @NotNull char [] password) {
     this.server = new Server(url,name,password);
@@ -55,9 +51,18 @@ public class JenkinsClient {
   }
 
   public UserAction getUserAction(){
-    return new UserActionImpl(httpReques);
+    if (userAction==null){
+      userAction = new UserActionImpl(httpReques);
+    }
+    return userAction;
   }
 
+  public HistoryInformation getHistoryInformation(){
+    if (historyInformation==null){
+      historyInformation = new HistoryInformationImpl(httpReques);
+    }
+    return historyInformation;
+  }
 
 
   public static class Server{

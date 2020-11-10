@@ -33,7 +33,7 @@ public class HttpReques {
         this.cookieMemory = new CookieMemory(tokenSave);
         final TokenInterceptor tokenInterceptor = new TokenInterceptor(server,cookieMemory, LOGIN_URL);
         client =  new OkHttpClient.Builder().cookieJar(cookieMemory)
-        //.addInterceptor(new SimulateBrowserInterceptor())
+        .addInterceptor(new LanguageInterceptor())
         .addInterceptor(new  CrumbInterceptor(server))
         .addInterceptor(tokenInterceptor)
         .build();

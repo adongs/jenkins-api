@@ -11,12 +11,12 @@ public class Job {
     /**
      * 上次构建状态
      */
-    private String status;
+    private Status status;
 
     /**
      * 构建状态
      */
-    private Integer buildHealth;
+    private Status buildHealth;
 
     /**
      * 任务名称
@@ -26,12 +26,12 @@ public class Job {
     /**
      * 上次构建成功时间
      */
-    private String buildSuccessDatatime;
+    private DateTime buildSuccessDatatime;
 
     /**
      * 上次构建失败时间
      */
-    private String buildFailureDatatime;
+    private DateTime buildFailureDatatime;
 
     /**
      * 持续时间(单位毫秒)
@@ -43,7 +43,8 @@ public class Job {
      */
     private boolean allowBuild;
 
-    public Job(String status, Integer buildHealth, String name, String buildSuccessDatatime, String buildFailureDatatime, Long duration, boolean allowBuild) {
+
+    public Job(Status status, Status buildHealth, String name, DateTime buildSuccessDatatime, DateTime buildFailureDatatime, Long duration, boolean allowBuild) {
         this.status = status;
         this.buildHealth = buildHealth;
         this.name = name;
@@ -53,31 +54,122 @@ public class Job {
         this.allowBuild = allowBuild;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public Integer getBuildHealth() {
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Status getBuildHealth() {
         return buildHealth;
+    }
+
+    public void setBuildHealth(Status buildHealth) {
+        this.buildHealth = buildHealth;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getBuildSuccessDatatime() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public DateTime getBuildSuccessDatatime() {
         return buildSuccessDatatime;
     }
 
-    public String getBuildFailureDatatime() {
+    public void setBuildSuccessDatatime(DateTime buildSuccessDatatime) {
+        this.buildSuccessDatatime = buildSuccessDatatime;
+    }
+
+    public DateTime getBuildFailureDatatime() {
         return buildFailureDatatime;
+    }
+
+    public void setBuildFailureDatatime(DateTime buildFailureDatatime) {
+        this.buildFailureDatatime = buildFailureDatatime;
     }
 
     public Long getDuration() {
         return duration;
     }
 
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
     public boolean isAllowBuild() {
         return allowBuild;
     }
+
+    public void setAllowBuild(boolean allowBuild) {
+        this.allowBuild = allowBuild;
+    }
+
+    public static class Status{
+
+        private String iconUrl;
+        private String title;
+        private String data;
+
+       public Status(String iconUrl, String title, String data) {
+           this.iconUrl = iconUrl;
+           this.title = title;
+           this.data = data;
+       }
+
+       public String getIconUrl() {
+           return iconUrl;
+       }
+
+       public void setIconUrl(String iconUrl) {
+           this.iconUrl = iconUrl;
+       }
+
+       public String getTitle() {
+           return title;
+       }
+
+       public void setTitle(String title) {
+           this.title = title;
+       }
+
+       public String getData() {
+           return data;
+       }
+
+       public void setData(String data) {
+           this.data = data;
+       }
+   }
+
+   public static class DateTime{
+       private String data;
+       private String description;
+
+       public DateTime(String data, String description) {
+           this.data = data;
+           this.description = description;
+       }
+
+       public String getData() {
+           return data;
+       }
+
+       public void setData(String data) {
+           this.data = data;
+       }
+
+       public String getDescription() {
+           return description;
+       }
+
+       public void setDescription(String description) {
+           this.description = description;
+       }
+   }
 }

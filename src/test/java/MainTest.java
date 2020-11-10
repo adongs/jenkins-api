@@ -1,11 +1,9 @@
 import com.adongs.JenkinsClient;
-import com.adongs.api.BuildOutput;
-import com.adongs.api.BuildQueue;
-import com.adongs.api.JobAction;
-import com.adongs.api.ViewInfo;
+import com.adongs.api.*;
 import com.adongs.api.impl.ViewInfoImpl;
 import com.adongs.http.HttpReques;
 import com.adongs.http.TokenSave;
+import com.adongs.model.BuildHistory;
 import com.adongs.model.QueueJob;
 import com.adongs.model.TestLoginResult;
 import com.adongs.model.View;
@@ -79,10 +77,17 @@ public class MainTest {
             public void delete() {
 
             }
-        }, "http://120.27.12.18:10004", "admin", "erdos2020".toCharArray());
-        final JobAction jobAction = jenkinsClient.getJobAction();
+        }, "xxxxxx", "xxxx", "xxxx".toCharArray());
+
+        final HistoryInformation historyInformation = jenkinsClient.getHistoryInformation();
+        final BuildHistory buildistory = historyInformation.buildistory("pre11_hyt-transport-service");
+        final ViewInfo view = jenkinsClient.getView();
+        final List<View> global = view.global();
+
+        System.out.println(buildistory);
+      /*  final JobAction jobAction = jenkinsClient.getJobAction();
         final boolean build = jobAction.build("hyt-statistics-front(运营支撑前端)");
-        System.out.println(build);
+        System.out.println(build);*/
         //获取视图
      /*   final ViewInfo view = jenkinsClient.getView();*/
         //全局视图
