@@ -1,8 +1,10 @@
 package com.adongs.api;
 
+import com.adongs.model.Job;
 import com.adongs.model.View;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yudong
@@ -24,4 +26,9 @@ public interface ViewInfo {
      */
     List<View> myView();
 
+    /**
+     * 获取视图中的所有job
+     * @return
+     */
+    Map<String, Job> jobAll();
 }

@@ -174,4 +174,9 @@ public class ViewInfoImpl implements ViewInfo {
         }
         return views;
     }
+
+    @Override
+    public Map<String, Job> jobAll() {
+        return new HashMap<>(ALL_JOB);
+    }
 }
