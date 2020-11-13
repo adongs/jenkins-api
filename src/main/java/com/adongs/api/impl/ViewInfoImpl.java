@@ -74,6 +74,7 @@ public class ViewInfoImpl implements ViewInfo {
     /**
      * 同步任务信息
      */
+    @Override
     public boolean syncJobs(){
         final ResponseData responseData = httpReques.get("/view/all",null);
         if (responseData.isRead()){

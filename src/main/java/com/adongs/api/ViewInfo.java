@@ -31,4 +31,10 @@ public interface ViewInfo {
      * @return
      */
     Map<String, Job> jobAll();
+
+    /**
+     * 同步任务
+     * @return
+     */
+    boolean syncJobs();
 }
