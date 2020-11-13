@@ -55,18 +55,14 @@ public class ViewInfoImpl implements ViewInfo {
                 final JSONObject viewJson= viewsJson.getJSONObject(i);
                 final String path = urlPath(viewJson.getString("url"))+"api/json";
                 final String description = viewJson.getString("description");
-                List<Job> jobList = new ArrayList<>(20);
+                Set<String> jobList = new HashSet<>(20);
                 final ResponseData jobs = httpReques.get(path, null);
                 if (jobs.isRead()){
                     final JSONObject jobsJSONObject = JSON.parseObject(jobs.getData(), JSONObject.class);
                     final JSONArray jobsArray = jobsJSONObject.getJSONArray("jobs");
                     for (int j = 0,s=jobsArray.size(); j < s; j++) {
                         final JSONObject jsonObject = jobsArray.getJSONObject(j);
-                        final String jobName = jsonObject.getString("name");
-                        final Job job = ALL_JOB.get(jobName);
-                        if (job!=null) {
-                            jobList.add(job);
-                        }
+                        jobList.add(jsonObject.getString("name"));
                     }
                 }
                 View view = new View(viewJson.getString("name"),path,description,jobList);
@@ -156,14 +152,10 @@ public class ViewInfoImpl implements ViewInfo {
                             final JSONObject data = JSON.parseObject(viewJob.getData(), JSONObject.class);
                             final String description = data.getString("description");
                             final JSONArray jobsArray = data.getJSONArray("jobs");
-                            List<Job> jobList = new ArrayList<>(20);
+                            Set<String> jobList = new HashSet<>(20);
                             for (int j = 0,s=jobsArray.size(); j < s; j++) {
                                 final JSONObject jsonObject = jobsArray.getJSONObject(j);
-                                final String jobName = jsonObject.getString("name");
-                                final Job job = ALL_JOB.get(jobName);
-                                if (job!=null) {
-                                    jobList.add(job);
-                                }
+                                jobList.add(jsonObject.getString("name"));
                             }
                             View view = new View(name,path,description,jobList);
                             views.add(view);

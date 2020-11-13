@@ -1,6 +1,7 @@
 package com.adongs.model;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 视图
@@ -26,10 +27,10 @@ public class View {
      */
     private String description;
 
-    private List<Job> jobs;
+    private Set<String> jobs;
 
 
-    public View(String name, String urlPath, String description,List<Job> jobs) {
+    public View(String name, String urlPath, String description, Set<String> jobs) {
         this.name = name;
         this.urlPath = urlPath;
         this.description = description;
@@ -40,7 +41,7 @@ public class View {
         return name;
     }
 
-    public List<Job> getJobs() {
+    public Set<String> getJobs() {
         return jobs;
     }
 
