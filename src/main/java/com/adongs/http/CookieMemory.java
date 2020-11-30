@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,12 +26,10 @@ public class CookieMemory  implements CookieJar {
 
     public CookieMemory(@NotNull TokenSave tokenSave) {
         this.tokenSave = tokenSave;
-        final String token = tokenSave.token();
-        if(!StringUtils.isEmpty(token)){
-            final Cookie build = stringToCookie(token);
-            if (tokenSave!=null) {
-                cookieStore.add(build);
-            }
+        final Optional<String> token = tokenSave.token();
+        if(token.isPresent()){
+            final Cookie build = stringToCookie(token.get());
+            cookieStore.add(build);
         }
     }
 
@@ -53,7 +52,7 @@ public class CookieMemory  implements CookieJar {
     }
 
     public void delete(){
-        tokenSave.delete();
+        tokenSave.save(null,0,null);
         cookieStore.clear();
     }
 

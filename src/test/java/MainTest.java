@@ -13,6 +13,7 @@ import org.seimicrawler.xpath.core.node.AllText;
 import org.seimicrawler.xpath.util.Scanner;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,49 +33,13 @@ public class MainTest {
 
     public static void testDemo(){
         JenkinsClient jenkinsClient = new JenkinsClient(new TokenSave() {
-            /**
-             * 获取缓存的令牌
-             * @return 令牌
-             */
             @Override
-            public String token() {
-                return null;
+            public Optional<String> token() {
+                return Optional.empty();
             }
 
-            /**
-             * 保存令牌,当访问到令牌的时候会调用保存
-             * @param token  令牌
-             * @param time   有效时间
-             * @param timeUnit 单位
-             */
             @Override
             public void save(String token, long time, TimeUnit timeUnit) {
-
-            }
-
-            /**
-             * 有效时间
-             * @return
-             */
-            @Override
-            public long time() {
-                return 0;
-            }
-
-            /**
-             * 是否过期
-             * @return
-             */
-            @Override
-            public boolean expired() {
-                return false;
-            }
-
-            /**
-             * 删除令牌
-             */
-            @Override
-            public void delete() {
 
             }
         }, "xxxxxx", "xxxx", "xxxx".toCharArray());

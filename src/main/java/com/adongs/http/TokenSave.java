@@ -1,5 +1,6 @@
 package com.adongs.http;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +14,7 @@ public interface TokenSave {
      * 获取token
      * @return
      */
-    public String token();
+    public Optional<String> token();
 
     /**
      * 保存token
@@ -21,48 +22,16 @@ public interface TokenSave {
      */
     public void save(String token,long time,TimeUnit timeUnit);
 
-    /**
-     * 获取过期时间
-     * @param token
-     */
-    public long time();
-
-    /**
-     * 返回是否过期
-     * @return
-     */
-    public boolean expired();
-
-    /**
-     * 删除
-     */
-    public void delete();
-
-
 
    public static class DefaultTokenSave implements TokenSave{
+
        @Override
-       public String token() {
-           return null;
+       public Optional<String> token() {
+           return Optional.empty();
        }
 
        @Override
        public void save(String token, long time, TimeUnit timeUnit) {
-
-       }
-
-       @Override
-       public long time() {
-           return 0;
-       }
-
-       @Override
-       public boolean expired() {
-           return false;
-       }
-
-       @Override
-       public void delete() {
 
        }
    }
