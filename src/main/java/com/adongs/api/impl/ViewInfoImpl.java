@@ -79,17 +79,24 @@ public class ViewInfoImpl implements ViewInfo {
         final ResponseData responseData = httpReques.get("/view/all",null);
         if (responseData.isRead()){
             JXDocument taskRootJXDocument = new JXDocument(Jsoup.parse(new String(responseData.getData())).children());
+            final String serverUrl = httpReques.getServer().getUrl();
             final List<JXNode> taskNode = taskRootJXDocument.selN(jobRule.getList());
             if (!taskNode.isEmpty()){
                 ALL_JOB.clear();
                 for (JXNode jxNode : taskNode) {
                     JXDocument jobJXDocument = new JXDocument(jxNode.asElement().children());
                     final String statusStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatus())).orElse("").toString();
-                    final String url = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusUrl())).orElse("").toString();
+                     String url = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusUrl())).orElse("").toString();
+                    if (!url.isEmpty()){
+                        url = serverUrl+url;
+                    }
                     final String title = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusTitle())).orElse("").toString();
                     Job.Status status = new Job.Status(url,title,statusStr);
                     final String buildHealthStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealth())).orElse("0").toString();
-                    final String buildHealthUrl = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthUrl())).orElse("").toString();
+                     String buildHealthUrl = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthUrl())).orElse("").toString();
+                    if (!buildHealthUrl.isEmpty()){
+                        buildHealthUrl = serverUrl+buildHealthUrl;
+                    }
                     final String buildHealthTitle = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthTitle())).orElse("").toString();
                     Job.Status buildHealth = new Job.Status(buildHealthUrl,buildHealthTitle,buildHealthStr);
                     final String name = Optional.ofNullable(jobJXDocument.selOne(jobRule.getName())).orElse("").toString();

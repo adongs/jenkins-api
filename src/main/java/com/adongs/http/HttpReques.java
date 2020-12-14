@@ -40,6 +40,10 @@ public class HttpReques {
         this.server = server;
     }
 
+    public JenkinsClient.Server getServer() {
+        return server;
+    }
+
     /**
      * 测试登录是否成功
      * @param name
