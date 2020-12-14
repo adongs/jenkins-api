@@ -10,6 +10,8 @@ import com.adongs.rule.MyViewRule;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.deploy.util.ArrayUtil;
+import com.sun.tools.javac.util.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.seimicrawler.xpath.JXDocument;
@@ -93,7 +95,11 @@ public class ViewInfoImpl implements ViewInfo {
                     final String title = Optional.ofNullable(jobJXDocument.selOne(jobRule.getStatusTitle())).orElse("").toString();
                     Job.Status status = new Job.Status(url,title,statusStr);
                     final String buildHealthStr = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealth())).orElse("0").toString();
-                     String buildHealthUrl = Optional.ofNullable(jobJXDocument.selOne(jobRule.getBuildHealthUrl())).orElse("").toString();
+                    final Iterator<String> buildHealthUrls = new HashSet<String>(Arrays.asList(jobRule.getBuildHealthUrl().split(","))).iterator();
+                    String buildHealthUrl = "";
+                    while (StringUtils.isEmpty(buildHealthUrl) && buildHealthUrls.hasNext()){
+                        buildHealthUrl = Optional.ofNullable(jobJXDocument.selOne(buildHealthUrls.next())).orElse("").toString();
+                    }
                     if (!buildHealthUrl.isEmpty()){
                         buildHealthUrl = serverUrl+buildHealthUrl;
                     }

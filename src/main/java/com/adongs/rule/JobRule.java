@@ -14,7 +14,7 @@ public class JobRule {
             "//td[1]/img/@src",
             "//td[1]/img/@tooltip",
             "//td[2]/@data",
-            "//td[2]/a/img/@src",
+            "//td[2]/a/img/@src,//td[2]/img/@src",
             "//td[2]/div/table/tbody/tr[1]/td[2]/allText()",
             "//td[3]/a/allText()",
             "//td[4]/@data",
